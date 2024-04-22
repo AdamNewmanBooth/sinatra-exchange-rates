@@ -1,9 +1,11 @@
 require "sinatra"
 require "sinatra/reloader"
+require "http"
+require "json"
 
 get("/") do
-  "
-  <h1>Welcome to your Sinatra App!</h1>
-  <p>Define some routes in app.rb</p>
-  "
+  
+@raw_response = HTTP.get("https://api.exchangerate.host/list?access_key=#{ENV['EXCHANGE_RATE_KEY']}")
+
+erb(:homepage)
 end
