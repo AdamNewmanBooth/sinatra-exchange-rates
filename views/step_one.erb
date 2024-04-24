@@ -4,9 +4,11 @@
 
   <% @currencies.keys.each do |symbol| %>
     <li>
-      <a href = <%=@the_symbol%>/<%= symbol %>" /a>
-       Convert 1 <%= symbol %> to <%= symbol %>...
+      <a href = "<%=@the_symbol%>/<%= symbol %>" /a>
+       Convert 1 <%= @the_symbol %> to <%= symbol %>...
      </li>
   <% end %>
 
 </ul>
+
+<p>Go <a href="/">back</a></p>

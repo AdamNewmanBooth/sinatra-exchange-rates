@@ -24,7 +24,7 @@ get("/") do
   erb(:homepage)
 end
 
-  get("/:from_currency") do
+  get("/:first_symbol") do
       @the_symbol = params.fetch("first_symbol")
 
       # Assemble the API url, including the API key in the query string
@@ -45,7 +45,17 @@ end
 
 end
 
-get("/:from_currency/to_currency")
-@original_currency = params.fetch("from_currency")
+get("/:first_symbol/:second_symbol") do
 
-  api_url = "https://api.exchangerate.host/list?access_key=#{ENV.fetch("EXCHANGE_RATE_KEY")}"
+  @from = params.fetch("first_symbol")
+  @to = params.fetch("second_symbol")
+  @url= "https://api.exchangerate.host/convert?access_key=#{ENV.fetch("EXCHANGE_RATE_KEY").chomp}&from=#{@from}&to=#{@to}&amount=1"
+
+  @raw_response = HTTP.get(@url)
+  @string_response = @raw_response.to_s
+  @parsed_response = JSON.parse(@string_response)
+  @amount = @parsed_response.fetch("result")
+
+
+  erb(:step_two)
+end
